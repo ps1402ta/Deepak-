@@ -4,53 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚠️ WARNING: SYSTEM BREACH ⚠️</title>
+    
+    <style>
+        body, html { margin: 0; padding: 0; background-color: #000; color: #0f0; font-family: 'Courier New', monospace; overflow: hidden; height: 100%; }
+        .glitch-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; z-index: 10; pointer-events: none; }
+        #hacker-screen { padding: 20px; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
+        .header-status { display: flex; justify-content: space-between; border-bottom: 1px solid #0f0; padding-bottom: 10px; }
+        .red-dot { height: 10px; width: 10px; background-color: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
+        .progress-border { width: 100%; height: 20px; border: 1px solid #0f0; margin-top: 10px; display:none; }
+        #progress-fill { width: 0%; height: 100%; background-color: #0f0; }
+        #video-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; }
+        video { width: 100%; height: 100%; object-fit: contain; }
+        #trap-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 200; }
+        .alert-window { border: 2px solid #f00; padding: 30px; text-align: center; background: #111; box-shadow: 0 0 20px #f00; color: white; }
+        .action-btn { background: #f00; color: #fff; border: none; padding: 10px 25px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    </style>
 </head>
-<body class="hacker-mode">
+<body>
 
     <div class="glitch-overlay"></div>
 
     <main id="hacker-screen">
         <div class="header-status">
-            <span class="red-dot"></span> LIVE_FEED: SERVER_04
-            <div class="timer">00:00:00:12</div>
+            <span><span class="red-dot"></span> LIVE_FEED: SERVER_04</span>
+            <span>00:00:00:12</span>
         </div>
-
-        <div class="console-box">
-            <div id="typed-text"></div>
-            
-            <div id="loading-area" style="display:none;">
-                <p>EXTRACTING HIDDEN_DANCE_FILE.mp4...</p>
-                <div class="progress-border">
-                    <div id="progress-fill"></div>
-                </div>
-                <div id="percentage">0%</div>
-            </div>
-        </div>
-
-        <div class="bottom-stats">
-            <div>TARGET_LOC: <span class="white-text">ENCRYPTED</span></div>
-            <div>STATUS: <span class="blink-text">BYPASSING FIREWALL...</span></div>
+        <div id="typed-text" style="margin-top:20px;"></div>
+        <div id="loading-area" class="progress-border">
+            <div id="progress-fill"></div>
         </div>
     </main>
 
     <div id="video-overlay">
-        <div class="leak-tag">CONFIDENTIAL - DO NOT SHARE</div>
-        <video id="prankVideo">
-            <source src="video.mp4" type="video/mp4">
-            Dost, browser update karle!
+        <video id="prankVideo" playsinline>
+            <source src="Video.mp4" type="video/mp4">
         </video>
     </div>
 
     <div id="trap-layer">
         <div class="alert-window">
-            <div class="alert-header">SYSTEM ALERT</div>
-            <div class="alert-body">
-                <p>Unauthorized access attempt from unknown IP.</p>
-                <p><strong>Secure your device now?</strong></p>
-                <button class="action-btn" onclick="triggerPrank()">SECURE SYSTEM</button>
-            </div>
+            <h1>⚠️ SYSTEM ALERT</h1>
+            <p>Unauthorized access detected.</p>
+            <button class="action-btn" onclick="triggerPrank()">SECURE SYSTEM</button>
         </div>
     </div>
 
+    <script>
+        function triggerPrank() {
+            document.getElementById('trap-layer').style.display = 'none';
+            const terminal = document.getElementById('typed-text');
+            const commands = ["> Bypassing Firewall...", "> Accessing Media...", "> Found: Video.mp4", "> Streaming now..."];
+            let i = 0;
+
+            let interval = setInterval(() => {
+                if (i < commands.length) {
+                    let p = document.createElement('p');
+                    p.textContent = commands[i];
+                    terminal.appendChild(p);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    document.querySelector('.progress-border').style.display = 'block';
+                    startLoading();
+                }
+            }, 600);
+        }
+
+        function startLoading() {
+            let fill = document.getElementById('progress-fill');
+            let w = 0;
+            let bar = setInterval(() => {
+                w += 5;
+                fill.style.width = w + "%";
+                if(w >= 100) {
+                    clearInterval(bar);
+                    document.getElementById('video-overlay').style.display = 'block';
+                    let v = document.getElementById('prankVideo');
+                    v.play();
+                }
+            }, 100);
+        }
+    </script>
 </body>
 </html>
